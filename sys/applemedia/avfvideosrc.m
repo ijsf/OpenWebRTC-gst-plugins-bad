@@ -176,7 +176,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     mainQueue =
         dispatch_queue_create ("org.freedesktop.gstreamer.avfvideosrc.main", NULL);
     workerQueue =
-        dispatch_queue_create ("org.freedesktop.gstreamer.avfvideosrc.output", NULL);
+        dispatch_queue_create ("org.freedesktop.gstreamer.avfvideosrc.output", DISPATCH_QUEUE_SERIAL);
 
     gst_base_src_set_live (baseSrc, TRUE);
     gst_base_src_set_format (baseSrc, GST_FORMAT_TIME);
