@@ -340,12 +340,16 @@ gst_gl_window_set_window_handle (GstGLWindow * window, guintptr handle)
   data->window = gst_object_ref (window);
   data->handle = handle;
 
+  // Below FIXME breaks OpenGL on some iOS 8.x devices.
+  // Window handle _must_ be set at this point in time (before GL context creation).
+#if 0
   /* FIXME: Move to a message which deactivates, calls implementation, activates */
   gst_gl_window_send_message_async (window,
       (GstGLWindowCB) _set_window_handle_cb, data,
       (GDestroyNotify) _free_swh_cb);
-
-  /* window_class->set_window_handle (window, handle); */
+#else
+  window_class->set_window_handle (window, handle);
+#endif
 }
 
 /**
